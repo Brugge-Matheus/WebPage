@@ -6,11 +6,33 @@ require 'routes.php';
 function exactMathUriInArrayRoutes($uri, $routes) {
 
     if(array_key_exists($uri , $routes)) {
-        return var_dump(['achou']);
+        return [$uri => $routes[$uri]];
     }
 
-    return var_dump(['não achou']);
+    return [];
 }
+
+ function regularExpressionMatchArrayRoutes($uri, $routes) {
+    return array_filter($routes, function($value) use($uri) {
+            $regex = str_replace('/', '\/', ltrim($value, '/'));
+        
+            return preg_match("/^$regex$/", ltrim($uri, '/'));
+
+        }, ARRAY_FILTER_USE_KEY);
+ }
+
+ function params($uri, $matchedUri) {
+    if(!empty($matchedUri)) {
+            
+    $matchedToGetParams = array_keys($matchedUri)[0];
+            
+        return array_diff(
+            explode('/' , ltrim($uri, '/')),
+            explode('/' , ltrim($matchedToGetParams, '/'))
+        );
+    }
+    return [];
+ }
 
 
 function router() {
@@ -20,6 +42,16 @@ function router() {
 
     $matchedUri = exactMathUriInArrayRoutes($uri, $routes);
 
-    
-    
+    if(empty($matchedUri)) {
+        $matchedUri = regularExpressionMatchArrayRoutes($uri, $routes);
+
+        if(!empty($matchedUri)) {
+            $params = params($uri, $matchedUri);
+            dd($params);
+            die();
+        }
+    }
+
+    dd($matchedUri);
+    die();
 }
