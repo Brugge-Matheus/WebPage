@@ -27,12 +27,22 @@ function exactMathUriInArrayRoutes($uri, $routes) {
     $matchedToGetParams = array_keys($matchedUri)[0];
             
         return array_diff(
-            explode('/' , ltrim($uri, '/')),
-            explode('/' , ltrim($matchedToGetParams, '/'))
+            $uri,
+            explode('/' , ltrim($matchedToGetParams, characters: '/'))
         );
     }
     return [];
- }
+}
+
+
+function formatParams($uri, $params) {
+        $paramsData = [];
+        foreach($params as $index => $param) {
+                $paramsData[$uri[$index - 1]] = $param;
+        }
+
+        return $paramsData;
+}
 
 
 function router() {
@@ -42,16 +52,20 @@ function router() {
 
     $matchedUri = exactMathUriInArrayRoutes($uri, $routes);
 
+    $params = [];
+
     if(empty($matchedUri)) {
         $matchedUri = regularExpressionMatchArrayRoutes($uri, $routes);
 
-        if(!empty($matchedUri)) {
-            $params = params($uri, $matchedUri);
-            dd($params);
-            die();
-        }
+        $uri = explode('/', ltrim($uri, '/'));
+        $params = params($uri, $matchedUri);
+        $params = formatParams($uri, $params);     
     }
 
-    dd($matchedUri);
-    die();
+    if(!empty($matchedUri)) {
+        return controller($matchedUri, $params);
+        
+    }
+
+    throw new Exception("Algo deu errado");
 }

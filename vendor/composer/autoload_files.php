@@ -9,4 +9,5 @@ return array(
     'ebe03ffed7a7c20866176adc2c2091d6' => $baseDir . '/app/router/router.php',
     '4adcf60d44ad4362f89080f361bbdc50' => $baseDir . '/app/helpers/constantes.php',
     'd03c5a6a9cde235e07357f3c5c37b083' => $baseDir . '/app/helpers/custom.php',
+    '8b4946bb97dd2c471d149c136c7f4f8b' => $baseDir . '/app/core/controller.php',
 );

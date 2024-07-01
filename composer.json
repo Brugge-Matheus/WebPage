@@ -4,21 +4,18 @@
         "files": [
             "app/router/router.php",
             "app/helpers/constantes.php",
-            "app/helpers/custom.php"
+            "app/helpers/custom.php",
+            "app/core/controller.php"
         ],
-
         "psr-4": {
-            "app\\":"app"
+            "app\\": "app"
         }
-
     },
-
     "authors": [
         {
             "name": "Brugge-Matheus",
             "email": "128723144+Brugge-Matheus@users.noreply.github.com"
         }
     ],
-
     "require": {}
 }

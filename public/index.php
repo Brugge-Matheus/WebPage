@@ -9,7 +9,30 @@
 </head>
 
 <body>
-    <?php router()?>
+    <?php     
+    try {
+        $data = router();
+        
+        extract($data['data']);
+        
+        if(!isset($data['view'])) {
+            throw new Exception('O índice view esta faltando');
+            
+        }
+
+        if(!file_exists(VIEW_DIR.$data['view'])) {
+            throw new Exception("Essa view: {$data['view']}, não existe");
+        }
+
+        $view = $data['view'];
+        
+        require VIEW_DIR.'master.php';
+    } catch(Exception $e) {
+        dd($e->getMessage());
+    }
+    ?>
+
+
 
 
 </body>
