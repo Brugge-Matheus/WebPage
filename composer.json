@@ -5,7 +5,9 @@
             "app/router/router.php",
             "app/helpers/constantes.php",
             "app/helpers/custom.php",
-            "app/core/controller.php"
+            "app/core/controller.php",
+            "app/database/connect.php",
+            "app/database/fetch.php"
         ],
         "psr-4": {
             "app\\": "app"

@@ -10,4 +10,6 @@ return array(
     '4adcf60d44ad4362f89080f361bbdc50' => $baseDir . '/app/helpers/constantes.php',
     'd03c5a6a9cde235e07357f3c5c37b083' => $baseDir . '/app/helpers/custom.php',
     '8b4946bb97dd2c471d149c136c7f4f8b' => $baseDir . '/app/core/controller.php',
+    'd788c0270e029776e05ccc0f8bcda9fb' => $baseDir . '/app/database/connect.php',
+    '487fb772afd1e5036f2a040073bcda89' => $baseDir . '/app/database/fetch.php',
 );

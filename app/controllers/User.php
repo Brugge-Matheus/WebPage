@@ -4,7 +4,13 @@ namespace app\controllers;
 class User {
     
     public function show($params) {
-        dd($params);
+
+        if(!isset($params['user'])) {
+            return redirect();
+        }
+        
+        $user = findBy('users', 'id', $params['user']);
+        dd($user);
         die();
     }
 

@@ -2,9 +2,15 @@
 
 function routes(): array {
     return [
-        '/' => 'Home@index',
-        '/user/create' => 'User@create',
-        '/user/[a-z0-9]+' => 'User@show',
-        '/user/[0-9]+/name/[a-z]+' => 'User@novoteste'
+        'POST' => [
+            '/login' => 'Login@action'
+        ],
+
+        'GET' => [
+            '/' => 'Home@index',
+            '/user/create' => 'User@create',
+            '/user/[0-9]+' => 'User@show',
+            '/login' => 'Login@index'
+        ]
     ];
 }

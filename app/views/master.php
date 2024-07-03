@@ -4,11 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHP</title>
+    <title><?= $title ?></title>
+    <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 
 <body>
-    <h2>Dynamic PHP - <?=$name?></h2>
+    <div id="header">
+        <?php require(VIEW_DIR.'partials/header.php')?>
+    </div>
 
     <div class="container">
         <?php require VIEW_DIR.$view?>
