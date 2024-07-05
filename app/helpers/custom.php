@@ -7,3 +7,8 @@ function dd($args) {
 function redirect($page = '/') {
     return header("Location: {$page}");
 }
+
+function setMessageAndRedirect($index, $message, $redirectTo) {
+    setFlash($index, $message);
+    return redirect($redirectTo);
+}

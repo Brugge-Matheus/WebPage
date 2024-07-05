@@ -14,33 +14,38 @@ class Login {
     }
 
     public function action() {
-        $_SESSION['logged'] = '';
+    $_SESSION['logged'] = '';
 
-        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-        $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
 
+    if(empty($email) || empty($password)) {
+        return setMessageAndRedirect('message', 'Usúario ou senha estão incorretos', '/login');
+    }
+
+    $user = findBy('users', 'email', $email);
+
+    if(!$user) {
+        return setMessageAndRedirect('message', 'Usúario ou senha estão incorretos', '/login');
+    }
+
+    $password = trim($password);
+    $storedPassword = trim($user->password);
+
+    if($password != $storedPassword) {
+    return setMessageAndRedirect('message', 'Usúario ou senha estão incorretos', '/login');
         
-        if(empty($email) || empty($password)) {
-            return redirect('/login');
-        }
+    }
 
-        $user = findBy('users', 'email', $email);
+    $_SESSION[LOGGED] = $user;
+    return redirect();
+}
 
-        if(!$user) {
-            return redirect('/login');
-        }
-        
-        // Verificação com hash
-        // if(!password_verify($password, $user->password)) {
-        //     return redirect('/login');
-        // }
 
-        if($password !== $user->password) {
-            redirect('login');
-        }
+    public function destroy() {
+        unset($_SESSION[LOGGED]);
 
-        $user = (array) $user;
-        $_SESSION['logged'] = $user;
         return redirect();
     }
+
 }

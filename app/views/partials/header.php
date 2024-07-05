@@ -13,8 +13,10 @@
 </ul>
 
 <div id="status-login">
-    <?=
-        $_SESSION['logged'] ? 'Bem-vindo - ' .$_SESSION['logged']['firstName'] .' '. $_SESSION['logged']['lastName'] : 'Bem-vindo Visitante';
-    ?>
-    <!-- Bem vindo, Visitante! -->
+    Bem vindo,
+    <?php if(logged()): ?>
+    <?= user()->firstName .' '. user()->lastName?> | <a href="/logout">Logout</a>
+    <?php else: ?>
+    visitante
+    <?php endif ?>
 </div>

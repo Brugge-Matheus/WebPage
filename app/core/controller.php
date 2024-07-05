@@ -15,5 +15,11 @@ function controller($matchedUri, $params) {
         throw new Exception("Metódo {$method} não existe na classe {$contoller}"); 
     }
     
-    return $contollerInstance->$method($params);
+    $controller = $contollerInstance->$method($params);
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        die();
+    }
+
+    return $controller;
 }
