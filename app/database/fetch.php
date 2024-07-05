@@ -12,7 +12,7 @@ function all(string $table, string $fields = '*'): array {
     }
 }
 
-function findBy($table, $whereField, $whereValue, $fields = '*'): object {
+function findBy($table, $whereField, $whereValue, $fields = '*') {
 
     try {
         $connect = connect();

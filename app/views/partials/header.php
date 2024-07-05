@@ -13,5 +13,8 @@
 </ul>
 
 <div id="status-login">
-    Bem vindo, Visitante!
+    <?=
+        $_SESSION['logged'] ? 'Bem-vindo - ' .$_SESSION['logged']['firstName'] .' '. $_SESSION['logged']['lastName'] : 'Bem-vindo Visitante';
+    ?>
+    <!-- Bem vindo, Visitante! -->
 </div>
