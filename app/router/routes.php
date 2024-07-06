@@ -3,7 +3,8 @@
 function routes(): array {
     return [
         'POST' => [
-            '/login' => 'Login@action'
+            '/login' => 'Login@action',
+            '/user/action' => 'User@action'
         ],
 
         'GET' => [

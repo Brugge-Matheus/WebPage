@@ -1,7 +1,10 @@
 <?php 
 
-function dd($args) {
-    return var_dump($args);
+function dd(...$args) {
+    foreach($args as $arg) {
+        var_dump($arg);
+    }
+    die();
 }
 
 function redirect($page = '/') {

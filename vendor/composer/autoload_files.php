@@ -14,4 +14,5 @@ return array(
     '487fb772afd1e5036f2a040073bcda89' => $baseDir . '/app/database/fetch.php',
     'c5c831abe3deb05584815241e65e01f1' => $baseDir . '/app/helpers/flash.php',
     '600236e161ed4c106ba9e3cc4caf1580' => $baseDir . '/app/helpers/sessions.php',
+    '972283ff3005095f3e0bca5c3291cb60' => $baseDir . '/app/helpers/validate.php',
 );

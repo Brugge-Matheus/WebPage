@@ -14,9 +14,25 @@ class User {
         die();
     }
 
-    public function create($params) {
-        dd($params);
-        die();
+    public function create() {
+        return [
+            'view' => 'create.php',
+            'data' => ['title' => 'Create']
+        ];
+    }
+
+    
+    public function action() {
+        $validate = validate([
+            'firstName' => 'required',
+            'lastName' => 'required',
+            'email' => 'email|unique:users',
+            'password' => 'required|maxlen:10'
+        ]);
+
+        if(!$validate) {
+            return redirect('/user/create');
+        }
     }
 
 }
