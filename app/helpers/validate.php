@@ -33,6 +33,7 @@ function singleValidation($validate, $field, $param) {
 
 function multipleValidations($validate, $field, $param) {
     $explodePipeValidate = explode('|', $validate);
+    $result = [];
 
     foreach($explodePipeValidate as $validate) {
 
@@ -40,57 +41,12 @@ function multipleValidations($validate, $field, $param) {
             [$validate, $param] = explode(':', $validate);
         }
                 
-        $result = $validate($field, $param);
+        $result[$field] = $validate($field, $param);
+
+        if(isset($result[$field]) && $result[$field] === false) {
+            break;
+        }
     }
 
-    return $result;
-}
-
-
-function required($field) {
-    if(empty($_POST[$field])) {
-        setFlash($field, "O campo é obrigatório");
-        return false;
-    }
-
-    return filter_input(INPUT_POST, $field, FILTER_SANITIZE_SPECIAL_CHARS);
-}
-
-
-function email($field) {
-    $emailIsValid = filter_input(INPUT_POST, $field, FILTER_VALIDATE_EMAIL);
-
-    if(!$emailIsValid) {
-        setFlash($field, 'O campo precisa ser um e-mail válido');
-        return false;
-    }
-
-    return filter_input(INPUT_POST, $field, FILTER_SANITIZE_SPECIAL_CHARS);
-}
-
-
-function unique($field, $param) {
-    $data = filter_input(INPUT_POST, $field, FILTER_SANITIZE_SPECIAL_CHARS);
-
-    $user = findBy($param, $field, $data);
-
-    if($user) {
-        setFlash($field, "Este {$field} ja esta cadastrado");
-        return false;
-    }
-
-    return $data;
-}
-
-
-function maxlen($field, $param) {
-    $data = filter_input(INPUT_POST, $field, FILTER_SANITIZE_SPECIAL_CHARS);
-
-    if(strlen($data) > $param) {
-        setFlash($field, "Esse campo não pode passar de {$param} caracteres");
-
-        return false;
-    }
-
-    return $data;
+    return $result[$field];
 }

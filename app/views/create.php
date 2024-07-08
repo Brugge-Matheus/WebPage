@@ -9,7 +9,7 @@
     <input type="text" name="lastName" placeholder="Seu sobrenome">
     <?= getFlash('lastName')?>
     <br>
-    <input type="email" name="email" placeholder="Seu email">
+    <input type="text" name="email" placeholder="Seu email">
     <?= getFlash('email')?>
     <br>
     <input type="password" name="password" placeholder="Sua senha">

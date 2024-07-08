@@ -29,17 +29,21 @@ class Login {
         return setMessageAndRedirect('message', 'Usúario ou senha estão incorretos', '/login');
     }
 
-    $password = trim($password);
-    $storedPassword = trim($user->password);
+    // Validação sem usar hash
 
-    if($password != $storedPassword) {
-    return setMessageAndRedirect('message', 'Usúario ou senha estão incorretos', '/login');
+    // $password = trim($password);
+    // $storedPassword = trim($user->password);
+
+    // if($password != $storedPassword) {
+    // return setMessageAndRedirect('message', 'Usúario ou senha estão incorretos', '/login');
         
-    }
-
-    // if(password_verify($password, $user->password)) {
-    //     return setMessageAndRedirect('message', 'Usúario ou senha estão incorretos', '/login');
     // }
+
+    // Validação usando hash
+    
+    if(!password_verify($password, $user->password)) {
+        return setMessageAndRedirect('message', 'Usúario ou senha estão incorretos', '/login');
+    }
 
     $_SESSION[LOGGED] = $user;
     return redirect();

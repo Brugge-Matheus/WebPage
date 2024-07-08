@@ -26,7 +26,7 @@ class User {
         $validate = validate([
             'firstName' => 'required',
             'lastName' => 'required',
-            'email' => 'email|unique:users',
+            'email' => 'required|email|unique:users',
             'password' => 'required|maxlen:10'
         ]);
 
