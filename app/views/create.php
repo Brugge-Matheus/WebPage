@@ -1,5 +1,7 @@
 <h2>Create</h2>
 
+<?= getFlash('message')?>
+
 <form action="/user/action" method="post">
     <input type="text" name="firstName" placeholder="Seu nome">
     <?= getFlash('firstName')?>

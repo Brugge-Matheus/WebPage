@@ -37,6 +37,10 @@ class Login {
         
     }
 
+    // if(password_verify($password, $user->password)) {
+    //     return setMessageAndRedirect('message', 'Usúario ou senha estão incorretos', '/login');
+    // }
+
     $_SESSION[LOGGED] = $user;
     return redirect();
 }

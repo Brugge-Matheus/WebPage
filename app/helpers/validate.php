@@ -7,24 +7,10 @@ function validate(array $validations) {
     foreach($validations as $field => $validate) {
 
         if(!str_contains($validate, '|')) {
-            
-            if(str_contains($validate, ':')) {
-                [$validate, $param] = explode(':', $validate);
-            }
-
-            $result[$field] = $validate($field, $param);
+            $result[$field] = singleValidation($validate, $field, $param);
 
         } else {
-            $explodePipeValidate = explode('|', $validate);
-
-            foreach($explodePipeValidate as $validate) {
-
-                if(str_contains($validate, ':')) {
-                [$validate, $param] = explode(':', $validate);
-                }
-                
-                $result[$field] = $validate($field, $param);
-            }
+            $result[$field] = multipleValidations($validate, $field, $param);
         }
     }
         
@@ -35,6 +21,32 @@ function validate(array $validations) {
     return $result;
 }
 
+
+function singleValidation($validate, $field, $param) {
+    if(str_contains($validate, ':')) {
+        [$validate, $param] = explode(':', $validate);
+    }
+
+    return $result[$field] = $validate($field, $param);
+}
+
+
+function multipleValidations($validate, $field, $param) {
+    $explodePipeValidate = explode('|', $validate);
+
+    foreach($explodePipeValidate as $validate) {
+
+        if(str_contains($validate, ':')) {
+            [$validate, $param] = explode(':', $validate);
+        }
+                
+        $result = $validate($field, $param);
+    }
+
+    return $result;
+}
+
+
 function required($field) {
     if(empty($_POST[$field])) {
         setFlash($field, "O campo é obrigatório");
@@ -43,6 +55,7 @@ function required($field) {
 
     return filter_input(INPUT_POST, $field, FILTER_SANITIZE_SPECIAL_CHARS);
 }
+
 
 function email($field) {
     $emailIsValid = filter_input(INPUT_POST, $field, FILTER_VALIDATE_EMAIL);
@@ -54,6 +67,7 @@ function email($field) {
 
     return filter_input(INPUT_POST, $field, FILTER_SANITIZE_SPECIAL_CHARS);
 }
+
 
 function unique($field, $param) {
     $data = filter_input(INPUT_POST, $field, FILTER_SANITIZE_SPECIAL_CHARS);
@@ -68,6 +82,15 @@ function unique($field, $param) {
     return $data;
 }
 
-function maxlen() {
 
+function maxlen($field, $param) {
+    $data = filter_input(INPUT_POST, $field, FILTER_SANITIZE_SPECIAL_CHARS);
+
+    if(strlen($data) > $param) {
+        setFlash($field, "Esse campo não pode passar de {$param} caracteres");
+
+        return false;
+    }
+
+    return $data;
 }

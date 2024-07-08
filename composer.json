@@ -8,6 +8,7 @@
             "app/core/controller.php",
             "app/database/connect.php",
             "app/database/fetch.php",
+            "app/database/create.php",
             "app/helpers/flash.php",
             "app/helpers/sessions.php",
             "app/helpers/validate.php"
