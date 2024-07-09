@@ -9,6 +9,8 @@
             "app/database/connect.php",
             "app/database/fetch.php",
             "app/database/create.php",
+            "app/database/delete.php",
+            "app/database/update.php",
             "app/helpers/flash.php",
             "app/helpers/sessions.php",
             "app/helpers/validate.php",
@@ -24,5 +26,7 @@
             "email": "128723144+Brugge-Matheus@users.noreply.github.com"
         }
     ],
-    "require": {}
+    "require": {
+        "league/plates": "^3.5"
+    }
 }

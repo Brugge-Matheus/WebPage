@@ -7,7 +7,7 @@ class Home {
         $user = all('users');
 
         return [
-            'view' => 'home.php',
+            'view' => 'home',
             'data' => ['title' => 'Home', 'users' => $user]
         ];
     }

@@ -8,7 +8,7 @@ class Login {
         $_SESSION['logged'] = '';
 
         return [
-            'view' => 'login.php',
+            'view' => 'login',
             'data' => ['title' => 'Login']
         ];
     }

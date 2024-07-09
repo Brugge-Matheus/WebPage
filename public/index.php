@@ -20,15 +20,21 @@ session_start();
             
         }
 
-        if(!file_exists(VIEW_DIR.$data['view'])) {
+        if(!file_exists(VIEW_DIR.$data['view'] .'.php')) {
             throw new Exception("Essa view: {$data['view']}, não existe");
         }
         
-        extract($data['data']);
+        // Create new Plates instance
+        $templates = new League\Plates\Engine(VIEW_DIR);
 
-        $view = $data['view'];
+        // Render a template
+        echo $templates->render($data['view'], $data['data']); 
+
+        // extract($data['data']);
+
+        // $view = $data['view'];
         
-        require VIEW_DIR.'master.php';
+        // require VIEW_DIR.'master.php';
 
     } catch(Exception $e) {
         

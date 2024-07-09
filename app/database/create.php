@@ -1,10 +1,15 @@
 <?php 
 
-function create($table, array $data) {
+function create(string $table, array $data) {
     try {
+        
+        if(!arrayIsAssociative($data)) {
+           throw new Exception('O array precisa ser associativo');
+           
+        }
+
         $connect = connect();
 
-        
         $fields = implode(', ', array_keys($data));
         $values = ':' .implode(', :', array_keys($data));
 

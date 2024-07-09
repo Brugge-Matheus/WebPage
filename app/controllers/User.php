@@ -16,7 +16,7 @@ class User {
 
     public function create() {
         return [
-            'view' => 'create.php',
+            'view' => 'create',
             'data' => ['title' => 'Create']
         ];
     }
@@ -44,9 +44,11 @@ class User {
         }
 
         setFlash('message', 'Usúario criado com sucesso');
-        return redirect();
-        
-        
+        return redirect(); 
+    }
+
+    public function update() {
+        return dd(update('users', ['firstName' => 'novoNome', 'lastName' => 'novoSobrenome'], ['id' => 9]));
     }
 
 }

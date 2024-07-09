@@ -13,6 +13,8 @@ return array(
     'd788c0270e029776e05ccc0f8bcda9fb' => $baseDir . '/app/database/connect.php',
     '487fb772afd1e5036f2a040073bcda89' => $baseDir . '/app/database/fetch.php',
     '80ebe21bb9aa7bae2de82f53a3fba4d6' => $baseDir . '/app/database/create.php',
+    '1c6d5fd95f040d45f180b09b23f0101c' => $baseDir . '/app/database/delete.php',
+    '2c005062744bd352f0d47533854949fa' => $baseDir . '/app/database/update.php',
     'c5c831abe3deb05584815241e65e01f1' => $baseDir . '/app/helpers/flash.php',
     '600236e161ed4c106ba9e3cc4caf1580' => $baseDir . '/app/helpers/sessions.php',
     '972283ff3005095f3e0bca5c3291cb60' => $baseDir . '/app/helpers/validate.php',

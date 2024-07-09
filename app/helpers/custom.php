@@ -15,3 +15,7 @@ function setMessageAndRedirect($index, $message, $redirectTo) {
     setFlash($index, $message);
     return redirect($redirectTo);
 }
+
+function arrayIsAssociative(array $data) {
+    return array_keys($data) !== range(0, count($data) -1 );
+}

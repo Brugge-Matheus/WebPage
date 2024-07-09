@@ -12,7 +12,8 @@ function routes(): array {
             '/user/create' => 'User@create',
             '/user/[0-9]+' => 'User@show',
             '/login' => 'Login@index',
-            '/logout' => 'Login@destroy'
+            '/logout' => 'Login@destroy',
+            '/editar/[0-9]+' => 'User@update'
         ]
     ];
 }
