@@ -10,11 +10,15 @@
 
 <body>
     <div id="header">
-        <?=$this->insert('partials/header')?>
+        <?= $this->insert('partials/header') ?>
     </div>
 
     <div class="container">
-        <?=$this->section('content')?>
+        <?= $this->section('content') ?>
+    </div>
+
+    <div class="container">
+        <?= $this->section('scripts') ?>
     </div>
 
 </body>

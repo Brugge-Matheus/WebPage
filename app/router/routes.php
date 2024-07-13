@@ -1,6 +1,7 @@
-<?php 
+<?php
 
-function routes(): array {
+function routes(): array
+{
     return [
         'POST' => [
             '/login' => 'Login@action',
@@ -13,7 +14,8 @@ function routes(): array {
             '/user/[0-9]+' => 'User@show',
             '/login' => 'Login@index',
             '/logout' => 'Login@destroy',
-            '/editar/[0-9]+' => 'User@update'
+            '/editar/[0-9]+' => 'User@update',
+            '/excluir/[0-9]+' => 'User@delete'
         ]
     ];
 }

@@ -1,9 +1,10 @@
 <?php
 
-function update(string $table, array $fields, array $where) {
+function update(string $table, array $fields, array $where)
+{
 
-    if(!arrayIsAssociative($fields) || !arrayIsAssociative($where)) {
-        throw new Exception('O array precisa ser associativo no update');    
+    if (!arrayIsAssociative($fields) || !arrayIsAssociative($where)) {
+        throw new Exception('O array precisa ser associativo no update');
     }
 
     $connect = connect();
@@ -11,21 +12,16 @@ function update(string $table, array $fields, array $where) {
     $values = '';
     $whereFields = implode(array_keys($where));
     $data = array_merge($fields, $where);
-    
-   foreach(array_keys($fields) as $field) {
-    $values .= "$field = :{$field}, ";
 
-   }
+    foreach (array_keys($fields) as $field) {
+        $values .= "$field = :{$field}, ";
+    }
 
     $values = trim($values, ', ');
 
     $sql = "UPDATE {$table} SET {$values} WHERE {$whereFields} = :{$whereFields}";
 
 
-    // return dd($sql, $data);
-
-   $prepare = $connect->prepare($sql);
-   return $prepare->execute($data);
-
-
+    $prepare = $connect->prepare($sql);
+    return $prepare->execute($data);
 }

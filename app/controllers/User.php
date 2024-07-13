@@ -1,28 +1,31 @@
-<?php 
+<?php
+
 namespace app\controllers;
 
-class User {
-    
-    public function show($params) {
+class User
+{
 
-        if(!isset($params['user'])) {
+    public function show($params)
+    {
+
+        if (!isset($params['user'])) {
             return redirect();
         }
-        
+
         $user = findBy('users', 'id', $params['user']);
-        dd($user);
-        die();
     }
 
-    public function create() {
+    public function create()
+    {
         return [
             'view' => 'create',
             'data' => ['title' => 'Create']
         ];
     }
 
-    
-    public function action() {
+
+    public function action()
+    {
         $validate = validate([
             'firstName' => 'required',
             'lastName' => 'required',
@@ -30,7 +33,7 @@ class User {
             'password' => 'required|maxlen:10'
         ]);
 
-        if(!$validate) {
+        if (!$validate) {
             return redirect('/user/create');
         }
 
@@ -38,17 +41,22 @@ class User {
 
         $created = create('users', $validate);
 
-        if(!$created) {
+        if (!$created) {
             setFlash('message', 'Ocorreu um erro ao cadastrar');
             return redirect('/user/create');
         }
 
         setFlash('message', 'Usúario criado com sucesso');
-        return redirect(); 
+        return redirect();
     }
 
-    public function update() {
-        return dd(update('users', ['firstName' => 'novoNome', 'lastName' => 'novoSobrenome'], ['id' => 9]));
+    public function update()
+    {
+        return dd(update('users', ['firstName' => 'Matheus', 'lastName' => 'Brugge'], ['id' => actualUri()]));
     }
 
+    public function delete()
+    {
+        return dd(delete('users', ['id' => actualUri()]));
+    }
 }
