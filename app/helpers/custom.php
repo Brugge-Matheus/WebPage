@@ -1,13 +1,5 @@
 <?php
 
-function dd(...$args)
-{
-    foreach ($args as $arg) {
-        var_dump($arg);
-    }
-    die();
-}
-
 function redirect($page = '/')
 {
     return header("Location: {$page}");
@@ -34,4 +26,8 @@ function actualUri()
     );
 
     return $uri['id'];
+}
+
+function isAjax()
+{
 }

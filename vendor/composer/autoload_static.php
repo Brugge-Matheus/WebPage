@@ -7,6 +7,8 @@ namespace Composer\Autoload;
 class ComposerStaticInitbf6c1a03271926032932501d28e4213e
 {
     public static $files = array (
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         'ebe03ffed7a7c20866176adc2c2091d6' => __DIR__ . '/../..' . '/app/router/router.php',
         '4adcf60d44ad4362f89080f361bbdc50' => __DIR__ . '/../..' . '/app/helpers/constantes.php',
         'd03c5a6a9cde235e07357f3c5c37b083' => __DIR__ . '/../..' . '/app/helpers/custom.php',
@@ -27,6 +29,11 @@ class ComposerStaticInitbf6c1a03271926032932501d28e4213e
         array (
             'app\\' => 4,
         ),
+        'S' => 
+        array (
+            'Symfony\\Polyfill\\Mbstring\\' => 26,
+            'Symfony\\Component\\VarDumper\\' => 28,
+        ),
         'L' => 
         array (
             'League\\Plates\\' => 14,
@@ -37,6 +44,14 @@ class ComposerStaticInitbf6c1a03271926032932501d28e4213e
         'app\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
+        ),
+        'Symfony\\Polyfill\\Mbstring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'Symfony\\Component\\VarDumper\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/var-dumper',
         ),
         'League\\Plates\\' => 
         array (
