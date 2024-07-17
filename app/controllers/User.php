@@ -31,7 +31,7 @@ class User
             'lastName' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|maxlen:10'
-        ]);
+        ], persistInput: true, checklCsrf: true);
 
         if (!$validate) {
             return redirect('/user/create');

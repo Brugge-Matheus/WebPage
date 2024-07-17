@@ -1,0 +1,5 @@
+function users() {
+    return {
+        data:[],
+    }
+}

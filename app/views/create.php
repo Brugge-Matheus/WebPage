@@ -2,20 +2,22 @@
 
 <h2>Create</h2>
 
-<?= getFlash('message')?>
+<?= getFlash('message') ?>
 
 <form action="/user/action" method="post">
-    <input type="text" name="firstName" placeholder="Seu nome">
-    <?= getFlash('firstName')?>
+    <?= getCsrf() ?>
+
+    <input type="text" name="firstName" placeholder="Seu nome" value="<?= getOld('firstName') ?>">
+    <?= getFlash('firstName') ?>
     <br>
-    <input type="text" name="lastName" placeholder="Seu sobrenome">
-    <?= getFlash('lastName')?>
+    <input type="text" name="lastName" placeholder="Seu sobrenome" value="<?= getOld('lastName') ?>">
+    <?= getFlash('lastName') ?>
     <br>
-    <input type="text" name="email" placeholder="Seu email">
-    <?= getFlash('email')?>
+    <input type=" text" name="email" placeholder="Seu email" value="<?= getOld('email') ?>">
+    <?= getFlash('email') ?>
     <br>
-    <input type="password" name="password" placeholder="Sua senha">
-    <?= getFlash('password')?>
+    <input type=" password" name="password" placeholder="Sua senha">
+    <?= getFlash('password') ?>
     <br>
 
     <input type="submit" value="Criar">
