@@ -17,7 +17,7 @@ function where(string $field, string $operator, string|int $value)
 {
     global $query;
 
-    if (!$query['read']) {
+    if (isset($query['read'])) {
         throw new Exception("É necessario executar o read antes do where" . 210);
     }
 
@@ -34,7 +34,7 @@ function orWhere(string $field, string $operator, string|int $value, string $typ
 {
     global $query;
 
-    if (!$query['where']) {
+    if (isset($query['where'])) {
         throw new Exception('É necessário executar o where antes do or where', 211);
     }
 
@@ -50,6 +50,33 @@ function orWhere(string $field, string $operator, string|int $value, string $typ
     $query['sql'] = "{$query['sql']} " . strtoupper($typeWhere) . " {$field} {$operator} :{$field}";
 }
 
+function limit(string|int $limit)
+{
+    global $query;
+
+    if (isset($query['paginate'])) {
+        throw new Exception("O limit não pode ser chamado com a paginação", 214);
+    }
+
+    $query['limit'] = true;
+    $query['sql'] = "{$query['sql']} LIMIT {$limit}";
+}
+
+function order(string $field, string $type = 'asc')
+{
+    global $query;
+
+    if (isset($query['limit'])) {
+        throw new Exception("O order não pode vir antes do limit", 214);
+    }
+
+    if (isset($query['paginate'])) {
+        throw new Exception("O order não pode vir depois da paginação", 214);
+    }
+
+    $query['sql'] = "{$query['sql']} ORDER BY {$field} {$type}";
+}
+
 function search()
 {
     global $query;
@@ -58,16 +85,12 @@ function search()
 function paginate()
 {
     global $query;
-}
 
-function limit()
-{
-    global $query;
-}
+    if (isset($query['limit'])) {
+        throw new Exception("A paginação não pode ser chamado com o limit", 214);
+    }
 
-function order()
-{
-    global $query;
+    $query['paginate'] = true;
 }
 
 function execute()

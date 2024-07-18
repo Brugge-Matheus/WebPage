@@ -9,10 +9,14 @@ class Home
     {
         // $user = all('users');
         read('users');
+        order('id', 'desc');
 
-        where('id', '=', '5');
+        paginate();
 
-        orWhere('name', '=', 'matheus');
+
+
+
+
 
         $user = execute();
         dd($user);
