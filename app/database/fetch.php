@@ -13,12 +13,12 @@ function read(string $table, string $fields = '*')
     $query['sql'] = "SELECT {$fields} FROM {$table}";
 }
 
-function where(string $field, string $operator, string|int $value)
+function where(string $field, string $operator = '=', string|int $value)
 {
     global $query;
 
-    if (isset($query['read'])) {
-        throw new Exception("É necessario executar o read antes do where" . 210);
+    if (!isset($query['read'])) {
+        throw new Exception("É necessario executar o read antes do where", 210);
     }
 
     if (func_num_args() !== 3) {
@@ -34,7 +34,7 @@ function orWhere(string $field, string $operator, string|int $value, string $typ
 {
     global $query;
 
-    if (isset($query['where'])) {
+    if (!isset($query['where'])) {
         throw new Exception('É necessário executar o where antes do or where', 211);
     }
 
