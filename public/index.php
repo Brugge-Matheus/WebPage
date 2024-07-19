@@ -1,8 +1,10 @@
 <?php require 'bootstrap.php';
 
-
-
 try {
+    if ($_ENV['MAINTENANCE'] === 'true') {
+        dd('Em manutenção )-: ');
+    }
+
     $data = router();
 
     if (isAjax()) {

@@ -9,14 +9,8 @@ class Home
     {
         // $user = all('users');
         read('users');
-        where('id', '=', 5);
-
-
-
-
-
-
-
+        where('id', '>', '5');
+        orWhere('name', '=', 'matheus');
 
         $user = execute();
         dd($user);
