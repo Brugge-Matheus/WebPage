@@ -7,17 +7,21 @@ class Home
 
     public function index($params)
     {
-        // $user = all('users');
-        read('users');
-        where('id', '>', '5');
-        orWhere('name', '=', 'matheus');
+        // $users = all('users');
 
-        $user = execute();
-        dd($user);
+        $search = filter_input(INPUT_GET, 's', FILTER_SANITIZE_SPECIAL_CHARS);
 
-        // return [
-        //     'view' => 'home',
-        //     'data' => ['title' => 'Home', 'users' => $user]
-        // ];
+        read('posts', 'title, slug, content, firstName, lastName, email');
+        tableJoinWithFK('users', 'id');
+
+        paginate(5);
+
+
+        $users = execute();
+
+        return [
+            'view' => 'home',
+            'data' => ['title' => 'Home', 'users' => $users, 'links' => render()]
+        ];
     }
 }

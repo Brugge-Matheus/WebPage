@@ -1,15 +1,7 @@
 <?php require 'bootstrap.php';
 
 try {
-    if ($_ENV['MAINTENANCE'] === 'true') {
-        dd('Em manutenção )-: ');
-    }
-
     $data = router();
-
-    if (isAjax()) {
-        die();
-    }
 
     if (!isset($data['data'])) {
         throw new Exception('O índice data esta faltando');

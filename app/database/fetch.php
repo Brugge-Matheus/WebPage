@@ -1,14 +1,22 @@
 <?php
 
 // query builder
+
+use Doctrine\Inflector\InflectorFactory;
+
 $query = [];
 
 function read(string $table, string $fields = '*')
 {
     global $query;
 
+    if (isset($query['sql'])) {
+        $query['sql'] = [];
+    }
+
     $query['read'] = true;
     $query['execute'] = [];
+    $query['table'] = $table;
 
     $query['sql'] = "SELECT {$fields} FROM {$table}";
 }
@@ -91,7 +99,7 @@ function orWhere()
     $data = match ($numArgs) {
         2 => whereTwoParameters($args),
         3 => whereThreeParameters($args, $validTypesWhere, $validOperators),
-        4 => whereFourParameters($args)
+        4 => $args
     };
 
     [$field, $operator, $value, $typeWhere] = $data;
@@ -129,17 +137,6 @@ function whereThreeParameters(array $args, array $validTypesWhere, array $validO
         [$field, $operator, $value, $typeWhere];
 }
 
-function whereFourParameters(array $args): array
-{
-    $field = $args[0];
-    $operator = $args[1];
-    $value = $args[2];
-    $typeWhere = $args[3];
-
-    return
-        [$field, $operator, $value, $typeWhere];
-}
-
 // function orWhere(string $field, string $operator, string|int $value, string $typeWhere = 'or')
 // {
 //     global $query;
@@ -159,6 +156,21 @@ function whereFourParameters(array $args): array
 //     $query['execute'] = array_merge($query['execute'], [$field => $value]);
 //     $query['sql'] .= " " . strtoupper($typeWhere) . " {$field} {$operator} :{$field}";
 // }
+
+function whereIn(string $field, array $data)
+{
+    global $query;
+
+    if (isset($query['where'])) {
+        throw new Exception("O where in não pode ser usado junto com o where", 214);
+    }
+
+    $whereValues = '\'' . implode('\', \'', $data) . '\'';
+
+    // dd($whereValues);
+
+    $query['sql'] .= " WHERE {$field} IN ({$whereValues})";
+}
 
 function limit(string|int $limit)
 {
@@ -187,34 +199,146 @@ function order(string $field, string $type = 'asc')
     $query['sql'] .= " ORDER BY {$field} {$type}";
 }
 
-function search()
+function search(array $searchFields)
 {
     global $query;
+
+    if (!isset($query['read'])) {
+        throw new Exception("É necessario executar o read antes do search", 210);
+    }
+
+    if (isset($query['where'])) {
+        throw new Exception("Não é possível chamar o where junto com o search", 210);
+    }
+
+    if (!arrayIsAssociative($searchFields)) {
+        throw new Exception("A busca precisa ser feita com um array associativo", 217);
+    }
+
+    $sql = "{$query['sql']} WHERE ";
+
+    foreach ($searchFields as $field => $searchField) {
+        $sql .= "{$field} LIKE :{$field} OR ";
+        $execute[$field] = "%{$searchField}%";
+    }
+
+    $sql = trim($sql, ' OR ');
+
+    $query['sql'] = $sql;
+    $query['execute'] = $execute;
+
+    // dd($query['sql'], $query['execute']);
 }
 
-function paginate()
+function paginate(string|int $perPage)
 {
     global $query;
+
+    $query['paginate'] = true;
 
     if (isset($query['limit'])) {
         throw new Exception("A paginação não pode ser chamado com o limit", 214);
     }
 
-    $query['paginate'] = true;
+    $rowCount = execute(rowCount: true);
+
+    $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_SPECIAL_CHARS);
+    $page = $page ?? 1;
+
+    $query['currentPage'] = (int)$page;
+    $query['pageCount'] = (int)ceil($rowCount / $perPage);
+    $offset = ($page - 1) * $perPage;
+
+    $query['sql'] .= " limit {$perPage} offset {$offset}";
 }
 
-function execute()
+function render()
 {
     global $query;
 
-    return $query;
+    $pageCount = $query['pageCount'];
+    $currentPage = $query['currentPage'];
 
-    $connect = connect();
+    $links = '<ul class="pagination">';
 
-    $prepare = $connect->prepare($query['sql']);
-    $prepare->execute();
+    if ($query['currentPage'] > 1) {
+        $page = "?page=" . ($currentPage - 1);
+        $links .= '<li class="page-item"><a href="' . $page . '" class="page-link">First</a></li>';
+        $links .= '<li class="page-item"><a href="' . $page . '" class="page-link">Previous</a></li>';
+    }
 
-    dd($query);
+    for ($i = 1; $i <= $pageCount; $i++) {
+        $page = "?page={$i}";
+        $links .= '<li class=""><a href="' . $page . '" class="page-link">' . $i . '</a></li>';
+    }
+
+    if ($query['currentPage'] < $pageCount) {
+        $lastPage = "?page=" . ($query['currentPage'] + 1);
+        $links .= '<li class="page-item"><a href="' . $lastPage . '" class="page-link">Next</a></li>';
+    }
+
+    $links .= '</ul>';
+
+    return $links;
+}
+
+function fieldFK(string $table, string $field)
+{
+    $inflector = InflectorFactory::create()->build();
+    $tableToSingular = $inflector->singularize($table);
+
+    return $tableToSingular . ucfirst($field);
+}
+
+function tableJoin(string $table, string $fieldFK, string $typeJoin = 'inner')
+{
+    global $query;
+
+    if (isset($query['where'])) {
+        throw new Exception("Não é possível adicionar o where antes do join", 214);
+    }
+
+    $fkToJoin = fieldFK($query['table'], $fieldFK);
+    $query['sql'] .= " " . strtoupper($typeJoin) . " JOIN {$table} ON {$table}.{$fkToJoin} = {$query['table']}.{$fieldFK}";
+}
+
+function tableJoinWithFK(string $table, string $fieldFK, string $typeJoin = 'inner')
+{
+    global $query;
+
+    if (isset($query['where'])) {
+        throw new Exception("Não é possível adicionar o where antes do join", 214);
+    }
+
+    $fkToJoin = fieldFK($table, $fieldFK);
+    $query['sql'] .= " " . strtoupper($typeJoin) . " JOIN {$table} ON {$table}.{$fieldFK} = {$query['table']}.{$fkToJoin}";
+}
+
+function execute(bool $isFetchAll = true, bool $rowCount = false)
+{
+    global $query;
+
+    try {
+        $connect = connect();
+
+        if (!isset($query['sql'])) {
+            throw new Exception("Não existe uma query a ser executada", 216);
+        }
+
+        // dd($query);
+
+        $prepare = $connect->prepare($query['sql']);
+        $prepare->execute($query['execute'] ?? []);
+
+        if ($rowCount) {
+            return $prepare->rowCount();
+        }
+
+        return ($isFetchAll) ? $prepare->fetchAll() :
+            $prepare->fetch();
+    } catch (PDOException $e) {
+        ddd($e, "Query: " . $query['sql']);
+    }
 }
 
 // query complete

@@ -1,46 +1,49 @@
 <?php
 require 'routes.php';
 
-function exactMathUriInArrayRoutes($uri, $routes) {
+function exactMathUriInArrayRoutes($uri, $routes)
+{
 
-    (array_key_exists($uri , $routes)) ? [$uri => $routes[$uri]] :  [];
-    
+    (array_key_exists($uri, $routes)) ? [$uri => $routes[$uri]] :  [];
 }
 
- function regularExpressionMatchArrayRoutes($uri, $routes) {
-    return array_filter($routes, function($value) use($uri) {
-            $regex = str_replace('/', '\/', ltrim($value, '/'));
-        
-            return preg_match("/^$regex$/", ltrim($uri, '/'));
+function regularExpressionMatchArrayRoutes($uri, $routes)
+{
+    return array_filter($routes, function ($value) use ($uri) {
+        $regex = str_replace('/', '\/', ltrim($value, '/'));
 
-        }, ARRAY_FILTER_USE_KEY);
- }
+        return preg_match("/^$regex$/", ltrim($uri, '/'));
+    }, ARRAY_FILTER_USE_KEY);
+}
 
- function params($uri, $matchedUri) {
-    if(!empty($matchedUri)) {
-            
-    $matchedToGetParams = array_keys($matchedUri)[0];
-            
+function params($uri, $matchedUri)
+{
+    if (!empty($matchedUri)) {
+
+        $matchedToGetParams = array_keys($matchedUri)[0];
+
         return array_diff(
             $uri,
-            explode('/' , ltrim($matchedToGetParams, characters: '/'))
+            explode('/', ltrim($matchedToGetParams, characters: '/'))
         );
     }
     return [];
 }
 
 
-function formatParams($uri, $params) {
-        $paramsData = [];
-        foreach($params as $index => $param) {
-                $paramsData[$uri[$index - 1]] = $param;
-        }
+function formatParams($uri, $params)
+{
+    $paramsData = [];
+    foreach ($params as $index => $param) {
+        $paramsData[$uri[$index - 1]] = $param;
+    }
 
-        return $paramsData;
+    return $paramsData;
 }
 
 
-function router() {
+function router()
+{
     $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
     $routes = routes();
@@ -50,17 +53,20 @@ function router() {
 
     $params = [];
 
-    if(empty($matchedUri)) {
+    if (empty($matchedUri)) {
         $matchedUri = regularExpressionMatchArrayRoutes($uri, $routes[$requestMethod]);
 
         $uri = explode('/', ltrim($uri, '/'));
         $params = params($uri, $matchedUri);
-        $params = formatParams($uri, $params);     
+        $params = formatParams($uri, $params);
     }
 
-    if(!empty($matchedUri)) {
+    if ($_ENV['MAINTENANCE'] === 'true') {
+        $matchedUri = (['/maintenance' => 'Maintenance@index']);
+    }
+
+    if (!empty($matchedUri)) {
         return controller($matchedUri, $params);
-        
     }
 
     throw new Exception("Algo deu errado");

@@ -28,6 +28,12 @@ function actualUri()
     return $uri['id'];
 }
 
-function isAjax()
+function ddd($data)
 {
+    if ($_ENV['PRODUCTION'] === 'true') {
+        dd('Something get wrong');
+    }
+
+
+    dd($data);
 }

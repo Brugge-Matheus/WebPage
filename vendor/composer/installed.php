@@ -3,13 +3,22 @@
         'name' => 'mathe/webpage',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '245c86ce39437a9d062abb01d1636afcbd398e24',
+        'reference' => 'e340b00b88087e0e590db59a0547267fd3a7bb2c',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
+        'doctrine/inflector' => array(
+            'pretty_version' => '2.0.10',
+            'version' => '2.0.10.0',
+            'reference' => '5817d0659c5b50c9b950feb9af7b9668e2c436bc',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../doctrine/inflector',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'graham-campbell/result-type' => array(
             'pretty_version' => 'v1.1.2',
             'version' => '1.1.2.0',
@@ -31,7 +40,7 @@
         'mathe/webpage' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '245c86ce39437a9d062abb01d1636afcbd398e24',
+            'reference' => 'e340b00b88087e0e590db59a0547267fd3a7bb2c',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

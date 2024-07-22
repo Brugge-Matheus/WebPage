@@ -6,8 +6,9 @@ body {
 .container {
     margin: auto;
     width: 50%;
-    border: 3px solid green;
+    border: 3px solid #0d6dfd6b;
     padding: 10px;
+    border-radius: 10px;
 }
 
 #box-login {
@@ -30,13 +31,14 @@ body {
     justify-content: space-between;
     width: 100%;
     align-items: center;
+    padding-bottom: 30px;
 }
 
 ul#menu-list {
     list-style: none;
     display: flex;
     padding: 0;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 ul#menu-list li {
@@ -45,6 +47,7 @@ ul#menu-list li {
 
 #status-login {
     background-color: #efefef;
+    margin-right: 20px;
 }
 
 ul#users-home {
