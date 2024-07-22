@@ -16,7 +16,8 @@
 <div id="status-login">
     Bem vindo,
     <?php if (logged()) : ?>
-    <?= user()->firstName . ' ' . user()->lastName ?> | <a href="/logout">Logout</a>
+    <?= user()->firstName . ' ' . user()->lastName ?> | <button type="button" class="btn btn-danger"><a
+            href="/logout">Logout</a></button>
     <?php else : ?>
     visitante
     <?php endif ?>

@@ -61,3 +61,8 @@ ul#users-home li {
     padding: 5px;
     margin-bottom: 3px;
 }
+
+.btn-danger > a {
+    text-decoration: none;
+    color: #fff;
+}

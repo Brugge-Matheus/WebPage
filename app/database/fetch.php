@@ -258,23 +258,30 @@ function render()
 
     $pageCount = $query['pageCount'];
     $currentPage = $query['currentPage'];
+    $class = '';
+    $maxLinks = 5;
 
     $links = '<ul class="pagination">';
 
     if ($query['currentPage'] > 1) {
-        $page = "?page=" . ($currentPage - 1);
-        $links .= '<li class="page-item"><a href="' . $page . '" class="page-link">First</a></li>';
-        $links .= '<li class="page-item"><a href="' . $page . '" class="page-link">Previous</a></li>';
+        $page = ($currentPage - 1);
+        $linkPage = http_build_query(array_merge($_GET, ['page' => $page]));
+        $links .= '<li class="page-item"><a href="?' . $linkPage . '" class="page-link">First</a></li>';
+        $links .= '<li class="page-item"><a href="?' . $linkPage . '" class="page-link">Previous</a></li>';
     }
 
-    for ($i = 1; $i <= $pageCount; $i++) {
-        $page = "?page={$i}";
-        $links .= '<li class=""><a href="' . $page . '" class="page-link">' . $i . '</a></li>';
+    for ($i = ($currentPage - $maxLinks); $i <= ($currentPage + $maxLinks); $i++) {
+        if ($i > 0 and $i <= $pageCount) {
+            $linkPage = http_build_query(array_merge($_GET, ['page' => $i]));
+            $class = $currentPage === $i ? 'active' : '';
+            $links .= '<li class="' . $class . '"><a href="?' . $linkPage . '" class="page-link">' . $i . '</a></li>';
+        }
     }
 
     if ($query['currentPage'] < $pageCount) {
-        $lastPage = "?page=" . ($query['currentPage'] + 1);
-        $links .= '<li class="page-item"><a href="' . $lastPage . '" class="page-link">Next</a></li>';
+        $lastPage = ($query['currentPage'] + 1);
+        $linkPage = http_build_query(array_merge($_GET, ['page' => $lastPage]));
+        $links .= '<li class="page-item"><a href="?' . $linkPage . '" class="page-link">Next</a></li>';
     }
 
     $links .= '</ul>';

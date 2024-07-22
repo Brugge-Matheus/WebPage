@@ -1,7 +1,7 @@
 <?php $this->layout('master', ['title' => $title]) ?>
 
 <h2>Create</h2>
-
+<hr>
 <?= getFlash('message') ?>
 
 <form action="/user/action" method="post">

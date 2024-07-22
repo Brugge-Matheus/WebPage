@@ -11,8 +11,11 @@ class Home
 
         $search = filter_input(INPUT_GET, 's', FILTER_SANITIZE_SPECIAL_CHARS);
 
-        read('posts', 'title, slug, content, firstName, lastName, email');
-        tableJoinWithFK('users', 'id');
+        read('users', 'id, firstName, lastName, password');
+
+        if ($search) {
+            search(['firstName' => $search]);
+        }
 
         paginate(5);
 
