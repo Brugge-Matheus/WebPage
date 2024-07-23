@@ -27,7 +27,7 @@ function validate(array $validations, bool $persistInput = false, bool $checklCs
         setOld();
     }
 
-    if (in_array(false, $result)) {
+    if (in_array(false, $result, true)) {
         return false;
     }
 
@@ -58,7 +58,7 @@ function multipleValidations($validate, $field, $param)
 
         $result[$field] = $validate($field, $param);
 
-        if (isset($result[$field]) && $result[$field] === false) {
+        if ($result[$field] === false or $result[$field] === null) {
             break;
         }
     }

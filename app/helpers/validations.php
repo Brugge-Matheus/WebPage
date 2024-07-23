@@ -1,7 +1,8 @@
-<?php 
+<?php
 
-function required($field) {
-    if(empty($_POST[$field])) {
+function required($field)
+{
+    if (empty($_POST[$field])) {
         setFlash($field, "O campo é obrigatório");
         return false;
     }
@@ -10,10 +11,24 @@ function required($field) {
 }
 
 
-function email($field) {
+function optional($field)
+{
+    $data = filter_input(INPUT_POST, $field, FILTER_SANITIZE_SPECIAL_CHARS);
+
+    if ($data === '') {
+
+        return null;
+    }
+
+    return $data;
+}
+
+
+function email($field)
+{
     $emailIsValid = filter_input(INPUT_POST, $field, FILTER_VALIDATE_EMAIL);
 
-    if(!$emailIsValid) {
+    if (!$emailIsValid) {
         setFlash($field, 'O campo precisa ser um e-mail válido');
         return false;
     }
@@ -22,12 +37,13 @@ function email($field) {
 }
 
 
-function unique($field, $param) {
+function unique($field, $param)
+{
     $data = filter_input(INPUT_POST, $field, FILTER_SANITIZE_SPECIAL_CHARS);
 
     $user = findBy($param, $field, $data);
 
-    if($user) {
+    if ($user) {
         setFlash($field, "Este {$field} ja esta cadastrado");
         return false;
     }
@@ -36,10 +52,11 @@ function unique($field, $param) {
 }
 
 
-function maxlen($field, $param) {
+function maxlen($field, $param)
+{
     $data = filter_input(INPUT_POST, $field, FILTER_SANITIZE_SPECIAL_CHARS);
 
-    if(strlen($data) > $param) {
+    if (strlen($data) > $param) {
         setFlash($field, "Esse campo não pode passar de {$param} caracteres");
 
         return false;

@@ -28,7 +28,7 @@ class User
     {
         $validate = validate([
             'firstName' => 'required',
-            'lastName' => 'required',
+            'lastName' => 'optional',
             'email' => 'required|email|unique:users',
             'password' => 'required|maxlen:10'
         ], persistInput: true, checklCsrf: true);

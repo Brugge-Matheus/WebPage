@@ -1,7 +1,11 @@
 <?php $this->layout('master', ['title' => $title]) ?>
 
-<h2>Users</h2>
+<?php if (logged()) : ?>
+<h2>Users (<?= $users->count ?>)</h2>
 <hr>
+<?php endif ?>
+
+
 <?php if (logged()) : ?>
 <form class="row g-3" action="/" method="get">
     <div class="col-auto">
@@ -19,7 +23,7 @@
 <?= getFlash('message', 'success') ?>
 <?php if (logged()) : ?>
 <ul id="users-home">
-    <?php foreach ($users as $user) : ?>
+    <?php foreach ($users->rows as $user) : ?>
 
     <li><?= $user->firstName ?> | <a href="/user/<?= $user->id ?>">Detalhes</a> | <a
             href="editar/<?= $user->id ?>">Editar</a> | <a href="excluir/<?= $user->id ?>"
