@@ -19,7 +19,7 @@ function update(string $table, array $fields, array $where)
 
     $values = trim($values, ', ');
 
-    $sql = "UPDATE {$table}d SET {$values} WHERE {$whereFields} = :{$whereFields}";
+    $sql = "UPDATE {$table} SET {$values} WHERE {$whereFields} = :{$whereFields}";
 
 
     $prepare = $connect->prepare($sql);

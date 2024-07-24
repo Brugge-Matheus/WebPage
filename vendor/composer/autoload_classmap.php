@@ -202,4 +202,5 @@ return array(
     'app\\controllers\\Login' => $baseDir . '/app/controllers/Login.php',
     'app\\controllers\\Maintenance' => $baseDir . '/app/controllers/Maintenance.php',
     'app\\controllers\\User' => $baseDir . '/app/controllers/User.php',
+    'app\\controllers\\UserImage' => $baseDir . '/app/controllers/UserImage.php',
 );

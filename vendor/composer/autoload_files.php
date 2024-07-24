@@ -23,4 +23,5 @@ return array(
     '2614686773c0a1173877274a48e5cf50' => $baseDir . '/app/helpers/old.php',
     'f1306ce6fd4b8486758b451f1387de87' => $baseDir . '/app/helpers/csrf.php',
     'd3dcc84c9fd8470324edf6e84a0b4e68' => $baseDir . '/app/helpers/email.php',
+    '7410792d8f25cad1c4f395211eaaf205' => $baseDir . '/app/helpers/image.php',
 );

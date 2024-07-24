@@ -6,7 +6,8 @@ function routes(): array
         'POST' => [
             '/login' => 'Login@action',
             '/contact' => 'Contact@action',
-            '/user/action' => 'User@action'
+            '/user/action' => 'User@action',
+            '/user/image/update' => 'UserImage@action'
         ],
 
         'GET' => [
@@ -17,7 +18,8 @@ function routes(): array
             '/contact' => 'Contact@index',
             '/logout' => 'Login@destroy',
             '/editar/[0-9]+' => 'User@update',
-            '/excluir/[0-9]+' => 'User@delete'
+            '/excluir/[0-9]+' => 'User@delete',
+            '/user/edit/profile' => 'User@edit'
         ]
     ];
 }

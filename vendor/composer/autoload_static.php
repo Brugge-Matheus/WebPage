@@ -24,6 +24,7 @@ class ComposerStaticInitbf6c1a03271926032932501d28e4213e
         '2614686773c0a1173877274a48e5cf50' => __DIR__ . '/../..' . '/app/helpers/old.php',
         'f1306ce6fd4b8486758b451f1387de87' => __DIR__ . '/../..' . '/app/helpers/csrf.php',
         'd3dcc84c9fd8470324edf6e84a0b4e68' => __DIR__ . '/../..' . '/app/helpers/email.php',
+        '7410792d8f25cad1c4f395211eaaf205' => __DIR__ . '/../..' . '/app/helpers/image.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -302,6 +303,7 @@ class ComposerStaticInitbf6c1a03271926032932501d28e4213e
         'app\\controllers\\Login' => __DIR__ . '/../..' . '/app/controllers/Login.php',
         'app\\controllers\\Maintenance' => __DIR__ . '/../..' . '/app/controllers/Maintenance.php',
         'app\\controllers\\User' => __DIR__ . '/../..' . '/app/controllers/User.php',
+        'app\\controllers\\UserImage' => __DIR__ . '/../..' . '/app/controllers/UserImage.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
