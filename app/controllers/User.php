@@ -12,7 +12,7 @@ class User
             return redirect();
         }
 
-        $user = findBy('users', 'id', $params['user']);
+        // $user = findBy('users', 'id', $params['user']);
     }
 
     public function create()
@@ -25,9 +25,19 @@ class User
 
     public function edit()
     {
+        if (!logged()) {
+            redirect();
+        }
+
+        read('users', 'users.id, firstName, lastName, email, password, path');
+        tableJoin('photos', 'id', 'left');
+        where('users.id', '=', user()->id);
+
+        $user = execute(isFetchAll: false);
+
         return [
             'view' => 'edit',
-            'data' => ['title' => 'Edit']
+            'data' => ['title' => 'Edit', 'user' => $user]
         ];
     }
 
@@ -37,7 +47,7 @@ class User
             'firstName' => 'required',
             'lastName' => 'optional',
             'email' => 'required|email|unique:users',
-            'password' => 'required|maxlen:10'
+            'password' => 'required'
         ], persistInput: true, checklCsrf: true);
 
         if (!$validate) {
@@ -57,9 +67,29 @@ class User
         return redirect();
     }
 
-    public function update()
+    public function update($args)
     {
-        return dd(update('users', ['firstName' => 'Matheus', 'lastName' => 'Brugge'], ['id' => actualUri()]));
+        if (!isset($args['user']) || $args['user'] != user()->id) {
+            return redirect();
+        }
+
+        $validated = validate([
+            'firstName' => 'required',
+            'lastName' => 'required',
+            'email' => 'required|email|uniqueUpdate:users,id=' . user()->id
+        ]);
+
+        if (!$validated) {
+            return redirect('/user/edit/profile');
+        }
+
+        $updated = update('users', $validated, ['id' => user()->id]);
+
+        if ($updated) {
+            return setMessageAndRedirect('updated_success', 'Dados atualizados com sucesso', '/user/edit/profile');
+        }
+
+        setMessageAndRedirect('updated_error', 'Ocorreu um erro ao atualizar seus dados', '/user/edit/profile');
     }
 
     public function delete()

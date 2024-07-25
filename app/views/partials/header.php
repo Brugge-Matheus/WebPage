@@ -16,13 +16,24 @@
 <div id="status-login">
     Bem vindo,
     <?php if (logged()) : ?>
-    <?= user()->firstName . ' ' . user()->lastName ?> <button type="button" class="btn btn-danger">
+
+    <?= user()->firstName ?>
+
+    <?php if (user()->path) : ?>
+    <img class="rounded-circle" src="/<?= user()->path ?>" alt="Foto-de-perfil">
+    <?php endif ?>
+
+    <button type="button" class="btn btn-danger">
         <a href="/logout">Logout</a>
     </button>
+
     <button type="button" class="btn btn-danger">
         <a href="/user/edit/profile">Edit Profile</a>
     </button>
+
     <?php else : ?>
+
     visitante
+
     <?php endif ?>
 </div>

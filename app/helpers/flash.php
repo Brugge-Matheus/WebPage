@@ -17,8 +17,6 @@ function getFlash($index, $style = 'danger')
 
         unset($_SESSION['flash'][$index]);
 
-        // return "<span style='$style'>$flash</span>";
-
         return "<div class='alert alert-{$style}' role='alert'>$flash</div>";
     }
 }

@@ -66,3 +66,9 @@ ul#users-home li {
     text-decoration: none;
     color: #fff;
 }
+.rounded-circle {
+    width: 60px;
+    height: 50px;
+    border: 1px solid black;
+    /* border: 1px solid #0d6dfd6b; */
+}

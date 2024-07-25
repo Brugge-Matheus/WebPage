@@ -27,6 +27,7 @@ class UserImage
             }
 
             if ($updated) {
+                $auth->path = $path;
                 setMessageAndRedirect('upload_success', 'Imagem enviada com sucesso', '/user/edit/profile');
                 return;
             }

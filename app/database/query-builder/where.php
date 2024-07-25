@@ -20,7 +20,9 @@ function where()
         $field = $args[0];
         $operator = '=';
         $value = $args[1];
-    } else {
+    }
+
+    if ($numArgs === 3) {
         $field = $args[0];
         $operator = $args[1];
         $value = $args[2];
@@ -34,9 +36,16 @@ function where()
         throw new Exception("Tipagem dos parâmetros inválida", 216);
     }
 
+    $fieldWhere = $field;
+
+    if (str_contains($field, '.')) {
+        [, $fieldWhere] = explode('.', $field);
+    }
+
+
     $query['where'] = true;
-    $query['execute'] = array_merge($query['execute'], [$field => $value]);
-    $query['sql'] .= " WHERE {$field} {$operator} :{$field}";
+    $query['execute'] = array_merge($query['execute'], [$fieldWhere => $value]);
+    $query['sql'] .= " WHERE {$field} {$operator} :{$fieldWhere}";
 }
 
 // function where(string $field, string $operator = '=', string|int $value)

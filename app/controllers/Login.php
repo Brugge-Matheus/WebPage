@@ -5,10 +5,8 @@ namespace app\controllers;
 
 class Login
 {
-    public function index()
+    public function index(): array
     {
-        $_SESSION['logged'] = '';
-
         return [
             'view' => 'login',
             'data' => ['title' => 'Login']
@@ -17,7 +15,6 @@ class Login
 
     public function action()
     {
-        $_SESSION['logged'] = '';
 
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
         $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -26,7 +23,14 @@ class Login
             return setMessageAndRedirect('message', 'Usúario ou senha estão incorretos', '/login');
         }
 
-        $user = findBy('users', 'email', $email);
+        // $user = findBy('users', 'email', $email);
+        read('users', 'users.id, firstName, lastName, email, password, path');
+        tableJoin('photos', 'id', 'left');
+        where('email', '=', $email);
+
+        $user = execute(isFetchAll: false);
+
+        // dd($user);
 
         if (!$user) {
             return setMessageAndRedirect('message', 'Usúario ou senha estão incorretos', '/login');
@@ -47,7 +51,10 @@ class Login
             return setMessageAndRedirect('message', 'Usúario ou senha estão incorretos', '/login');
         }
 
+        unset($user->password);
+
         $_SESSION[LOGGED] = $user;
+
         return redirect();
     }
 
@@ -56,7 +63,7 @@ class Login
     {
         unset($_SESSION[LOGGED]);
 
-        return  [
+        return [
             'view' => 'home',
             'data' => ['title' => 'Home']
         ];
